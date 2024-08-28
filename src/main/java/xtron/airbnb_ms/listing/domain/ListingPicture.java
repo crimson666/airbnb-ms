@@ -24,6 +24,11 @@ public class ListingPicture extends AbstractAuditingEntity<Long> {
     @Column(name = "id")
     private Long id;
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
     @ManyToOne
     @JoinColumn(name = "listing_fk", referencedColumnName = "id")
     private Listing listing;
@@ -35,21 +40,20 @@ public class ListingPicture extends AbstractAuditingEntity<Long> {
     @Column(name = "file_content_type")
     private String fileContentType;
 
-    @Column(name = "cover")
+    @Column(name = "is_cover")
     private boolean isCover;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ListingPicture that)) return false;
-        return isCover() == that.isCover() && Arrays.equals(getFile(), that.getFile()) && Objects.equals(getFileContentType(), that.getFileContentType());
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingPicture that = (ListingPicture) o;
+        return isCover == that.isCover && Objects.deepEquals(file, that.file) && Objects.equals(fileContentType, that.fileContentType);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(getFileContentType(), isCover());
-        result = 31 * result + Arrays.hashCode(getFile());
-        return result;
+        return Objects.hash(Arrays.hashCode(file), fileContentType, isCover);
     }
 
     @Override

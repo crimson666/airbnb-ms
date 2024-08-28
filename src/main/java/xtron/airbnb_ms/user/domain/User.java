@@ -27,6 +27,11 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(name = "id")
     private Long id;
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -44,7 +49,7 @@ public class User extends AbstractAuditingEntity<Long> {
     private UUID publicId;
 
     @ManyToMany
-    @JoinTable( name = "user_authority", joinColumns = {@JoinColumn(name="user", referencedColumnName = "id")},
+    @JoinTable( name = "user_authority", joinColumns = {@JoinColumn(name="user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name="authority_name",referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
@@ -71,4 +76,6 @@ public class User extends AbstractAuditingEntity<Long> {
                 ", publicId=" + publicId +
                 '}';
     }
+
+
 }

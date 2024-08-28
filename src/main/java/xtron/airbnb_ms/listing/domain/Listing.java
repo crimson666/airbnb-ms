@@ -27,6 +27,10 @@ public class Listing extends AbstractAuditingEntity<Long> {
     @Column(name = "id")
     private Long id;
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 
     @UuidGenerator
     @Column(name = "public_id", nullable = false)
@@ -66,13 +70,14 @@ public class Listing extends AbstractAuditingEntity<Long> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Listing listing)) return false;
-        return getGuests() == listing.getGuests() && getBedrooms() == listing.getBedrooms() && getBeds() == listing.getBeds() && getBathrooms() == listing.getBathrooms() && getPrice() == listing.getPrice() && Objects.equals(getTitle(), listing.getTitle()) && Objects.equals(getDescription(), listing.getDescription()) && getBookingCategory() == listing.getBookingCategory() && Objects.equals(getLocation(), listing.getLocation()) && Objects.equals(getLandlordPublicId(), listing.getLandlordPublicId());
+        if (o == null || getClass() != o.getClass()) return false;
+        Listing listing = (Listing) o;
+        return guests == listing.guests && bedrooms == listing.bedrooms && beds == listing.beds && bathrooms == listing.bathrooms && price == listing.price && Objects.equals(title, listing.title) && Objects.equals(description, listing.description) && bookingCategory == listing.bookingCategory && Objects.equals(location, listing.location) && Objects.equals(landlordPublicId, listing.landlordPublicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getDescription(), getGuests(), getBedrooms(), getBeds(), getBathrooms(), getPrice(), getBookingCategory(), getLocation(), getLandlordPublicId());
+        return Objects.hash(title, description, guests, bedrooms, beds, bathrooms, price, bookingCategory, location, landlordPublicId);
     }
 
     @Override
